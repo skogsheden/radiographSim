@@ -1,0 +1,2000 @@
+script: "/main/Block/block.gui_script"
+fonts {
+  name: "Roboto"
+  font: "/dd-gui/fonts/Roboto.font"
+}
+fonts {
+  name: "Roboto_bold"
+  font: "/main/Roboto_bold.font"
+}
+textures {
+  name: "test"
+  texture: "/main/Images/bisectris.atlas"
+}
+nodes {
+  size {
+    x: 250.0
+    y: 750.0
+  }
+  color {
+    x: 0.6
+    y: 0.6
+    z: 0.6
+  }
+  type: TYPE_BOX
+  id: "sortspace"
+  xanchor: XANCHOR_LEFT
+  pivot: PIVOT_SW
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 700.0
+  }
+  size {
+    x: 65.0
+    y: 65.0
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "box1"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 630.0
+  }
+  size {
+    x: 65.0
+    y: 65.0
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "box2"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 560.0
+  }
+  size {
+    x: 65.0
+    y: 65.0
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "box3"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 490.0
+  }
+  size {
+    x: 65.0
+    y: 65.0
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "box4"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 420.0
+  }
+  size {
+    x: 65.0
+    y: 65.0
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "box5"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 350.0
+  }
+  size {
+    x: 65.0
+    y: 65.0
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "box6"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 124.0
+    y: 302.0
+  }
+  rotation {
+    z: -90.0
+  }
+  size {
+    x: 33.0
+    y: 240.0
+  }
+  type: TYPE_BOX
+  texture: "test/sensor"
+  id: "sensor1"
+  pivot: PIVOT_W
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 50.0
+    y: 200.0
+  }
+  size {
+    x: 60.0
+    y: 60.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "sortbox1"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 20.0
+    y: 40.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "test/rektangle"
+  id: "img"
+  parent: "sortbox1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 200.0
+  }
+  size {
+    x: 60.0
+    y: 60.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "sortbox2"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 45.0
+    y: 45.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "test/romb"
+  id: "img1"
+  parent: "sortbox2"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 200.0
+    y: 200.0
+  }
+  size {
+    x: 60.0
+    y: 60.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "sortbox3"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 45.0
+    y: 45.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "test/tringel up"
+  id: "img2"
+  parent: "sortbox3"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 50.0
+    y: 130.0
+  }
+  size {
+    x: 60.0
+    y: 60.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "sortbox4"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 45.0
+    y: 45.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "test/tringel down"
+  id: "img3"
+  parent: "sortbox4"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 125.0
+    y: 130.0
+  }
+  size {
+    x: 60.0
+    y: 60.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "sortbox5"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 25.0
+    y: 25.0
+    z: 5.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "test/smallsquare"
+  id: "img4"
+  parent: "sortbox5"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 200.0
+    y: 130.0
+  }
+  size {
+    x: 60.0
+    y: 60.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "sortbox6"
+  parent: "sortspace"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 40.0
+    y: 20.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "test/rektangle_hor"
+  id: "img5"
+  parent: "sortbox6"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 3.0
+    y: 25.0
+  }
+  type: TYPE_TEMPLATE
+  id: "newcase"
+  parent: "sortspace"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  position {
+    x: 62.0
+  }
+  size {
+    x: 110.0
+    y: 30.0
+  }
+  type: TYPE_BOX
+  id: "newcase/bg"
+  parent: "newcase"
+  overridden_fields: 1
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Nytt fall"
+  id: "newcase/text"
+  parent: "newcase/bg"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 172.0
+    y: 25.0
+  }
+  type: TYPE_TEMPLATE
+  id: "correct"
+  parent: "sortspace"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  position {
+    x: 13.0
+  }
+  size {
+    x: 110.0
+    y: 30.0
+  }
+  type: TYPE_BOX
+  id: "correct/bg"
+  parent: "correct"
+  overridden_fields: 1
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Visa r\303\244ttning"
+  id: "correct/text"
+  parent: "correct/bg"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 464.0
+    y: 220.0
+  }
+  size {
+    x: 245.0
+    y: 305.0
+  }
+  type: TYPE_BOX
+  id: "xraybg"
+  layer: "marker"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -164.0
+  }
+  size {
+    x: 200.0
+    y: 20.0
+  }
+  type: TYPE_TEXT
+  text: "Excentrisk projektion"
+  font: "Roboto"
+  id: "excen_text"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "xraybg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 464.0
+    y: 220.0
+  }
+  size {
+    x: 240.0
+    y: 300.0
+  }
+  color {
+    x: 0.101960786
+    y: 0.101960786
+    z: 0.101960786
+  }
+  type: TYPE_BOX
+  id: "xray"
+  layer: "marker"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -65.0
+    y: -98.0
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  type: TYPE_PIE
+  id: "Ring2"
+  parent: "xray"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 65.0
+    y: -98.0
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  type: TYPE_PIE
+  id: "Ring1"
+  parent: "xray"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -100.0
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  type: TYPE_BOX
+  texture: "test/trinagel"
+  id: "xray_triangle"
+  parent: "xray"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 180.0
+    y: 180.0
+  }
+  type: TYPE_BOX
+  texture: "test/up_block"
+  id: "upbox"
+  parent: "xray"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 20.0
+    y: 40.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/rektangle"
+  id: "object_ray1"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: 10.0
+  }
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/romb"
+  id: "object_ray2"
+  pivot: PIVOT_N
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -1.999997
+  }
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  color {
+    x: 0.9019608
+    y: 0.9019608
+    z: 0.9019608
+  }
+  type: TYPE_BOX
+  texture: "test/tringel up"
+  id: "object_ray3"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -4.666667
+  }
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/tringel down"
+  id: "object_ray4"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -4.666667
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/smallsquare"
+  id: "object_ray5"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -4.666667
+  }
+  size {
+    x: 40.0
+    y: 20.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/rektangle_hor"
+  id: "object_ray6"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    x: -85.0
+  }
+  rotation {
+    z: 90.0
+  }
+  size {
+    x: 180.0
+  }
+  type: TYPE_BOX
+  id: "cone_left"
+  pivot: PIVOT_S
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.96
+}
+nodes {
+  position {
+    x: 85.0
+  }
+  rotation {
+    z: -90.0
+  }
+  size {
+    x: 180.0
+  }
+  type: TYPE_BOX
+  id: "cone_right"
+  pivot: PIVOT_N
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.96
+}
+nodes {
+  position {
+    x: 987.0
+    y: 130.0
+  }
+  size {
+    x: 600.0
+    y: 600.0
+  }
+  type: TYPE_BOX
+  id: "tube"
+  pivot: PIVOT_S
+  inherit_alpha: true
+  alpha: 0.0
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -5.0
+    y: 412.0
+  }
+  rotation {
+    z: -90.0
+  }
+  size {
+    x: 606.0
+    y: 210.0
+  }
+  color {
+    x: 0.8
+    y: 0.8
+    z: 0.8
+  }
+  type: TYPE_BOX
+  texture: "test/tube"
+  id: "tube_img"
+  pivot: PIVOT_E
+  parent: "tube"
+}
+nodes {
+  position {
+    y: -96.0
+  }
+  rotation {
+    z: 90.0
+  }
+  size {
+    x: 2.0
+    y: 400.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray1"
+  pivot: PIVOT_N
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    y: 5.0
+  }
+  rotation {
+    z: 90.0
+  }
+  size {
+    x: 2.0
+    y: 400.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray2"
+  pivot: PIVOT_N
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    y: -46.0
+  }
+  rotation {
+    z: 90.0
+  }
+  size {
+    x: 2.0
+    y: 400.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray3"
+  pivot: PIVOT_N
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    y: 58.0
+  }
+  rotation {
+    z: 90.0
+  }
+  size {
+    x: 2.0
+    y: 400.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray4"
+  pivot: PIVOT_N
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    y: 97.0
+  }
+  rotation {
+    z: 90.0
+  }
+  size {
+    x: 2.0
+    y: 400.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray5"
+  pivot: PIVOT_N
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    x: 983.0
+    y: 118.0
+  }
+  size {
+    x: 180.0
+    y: 250.0
+  }
+  type: TYPE_BOX
+  texture: "test/Block"
+  id: "box"
+  pivot: PIVOT_S
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 88.0
+    y: 248.66663
+  }
+  size {
+    x: 5.0
+    y: 240.0
+  }
+  type: TYPE_BOX
+  id: "corner_right"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -87.0
+    y: 248.66663
+  }
+  size {
+    x: 5.0
+    y: 240.0
+  }
+  type: TYPE_BOX
+  id: "corner_left"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 134.66669
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  color {
+    y: 0.0
+  }
+  type: TYPE_BOX
+  id: "object1"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 182.00003
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+  }
+  type: TYPE_BOX
+  id: "object2"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 57.00006
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  color {
+    x: 0.4
+    y: 0.3019608
+    z: 0.7019608
+  }
+  type: TYPE_BOX
+  id: "object3"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 29.000061
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  color {
+    x: 0.5019608
+    y: 0.5019608
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "object4"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 91.666626
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  color {
+    x: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "triangel"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 222.00006
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  color {
+    x: 0.101960786
+    y: 0.3019608
+    z: 0.3019608
+  }
+  type: TYPE_BOX
+  id: "object5"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 93.00006
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  color {
+    x: 0.6
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "object6"
+  pivot: PIVOT_N
+  parent: "box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 985.0
+    y: 128.0
+  }
+  rotation {
+    z: -90.0
+  }
+  size {
+    x: 33.0
+    y: 240.0
+  }
+  type: TYPE_BOX
+  texture: "test/sensor"
+  id: "sensor"
+  pivot: PIVOT_W
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 987.0
+    y: 64.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Fokus vinkel"
+  font: "Roboto"
+  id: "tube_angle_text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 987.0
+    y: 39.0
+  }
+  type: TYPE_TEMPLATE
+  id: "tube_angle"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/bg"
+  parent: "tube_angle"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/slider_bg"
+  parent: "tube_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/slider_level"
+  parent: "tube_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/handle"
+  parent: "tube_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/accent"
+  parent: "tube_angle/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/txtbox"
+  parent: "tube_angle/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "tube_angle/txt"
+  parent: "tube_angle/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1188.0
+    y: 266.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Visa/d\303\266lj linjer"
+  font: "Roboto"
+  id: "lines_text"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  inherit_alpha: true
+  enabled: false
+}
+nodes {
+  position {
+    x: 1189.0
+    y: 239.0
+  }
+  type: TYPE_TEMPLATE
+  id: "showlines"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/checkbox.gui"
+  enabled: false
+}
+nodes {
+  type: TYPE_BOX
+  id: "showlines/bg"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "showlines"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "showlines/check"
+  parent: "showlines/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "showlines/txtbox"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "showlines"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "showlines/txt"
+  parent: "showlines/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    y: 800.0
+  }
+  size {
+    x: 3048.0
+    y: 50.0
+  }
+  color {
+    x: 0.702
+    y: 0.702
+    z: 0.702
+  }
+  type: TYPE_BOX
+  id: "bakground"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_NW
+  layer: "bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 688.0
+    y: -25.0
+  }
+  type: TYPE_TEMPLATE
+  id: "combobox"
+  parent: "bakground"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/combobox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/textbox"
+  parent: "combobox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/arrow"
+  parent: "combobox/textbox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "combobox/selecttext"
+  parent: "combobox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/bg"
+  parent: "combobox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/mask"
+  parent: "combobox/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/dddrag"
+  parent: "combobox/mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/button"
+  parent: "combobox/dddrag"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "combobox/text"
+  parent: "combobox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/selected"
+  parent: "combobox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "combobox/dragpos"
+  parent: "combobox/mask"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 532.0
+    y: -25.0
+  }
+  size {
+    x: 200.0
+    y: 20.0
+  }
+  type: TYPE_TEXT
+  text: "Antal objekt"
+  font: "Roboto"
+  id: "case_text"
+  yanchor: YANCHOR_TOP
+  parent: "bakground"
+  layer: "top"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 30.0
+    y: -25.0
+  }
+  type: TYPE_TEMPLATE
+  id: "menu"
+  parent: "bakground"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  size {
+    x: 30.0
+    y: 30.0
+  }
+  type: TYPE_BOX
+  id: "menu/bg"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  parent: "menu"
+  overridden_fields: 4
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 30.0
+    y: 30.0
+  }
+  type: TYPE_TEXT
+  text: "<"
+  id: "menu/text"
+  parent: "menu/bg"
+  overridden_fields: 4
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1279.0
+    y: 794.0
+  }
+  size {
+    y: 50.0
+  }
+  color {
+    x: 0.702
+    y: 0.702
+    z: 0.702
+  }
+  type: TYPE_BOX
+  id: "helparea"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_NE
+  layer: "bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -100.0
+    y: -20.0
+    z: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "help"
+  parent: "helparea"
+  layer: "top"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "help/bg"
+  parent: "help"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Hj\303\244lp"
+  id: "help/text"
+  parent: "help/bg"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1188.0
+    y: 115.0
+  }
+  type: TYPE_TEMPLATE
+  id: "showrays"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "showrays/bg"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "showrays"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "showrays/check"
+  parent: "showrays/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "showrays/txtbox"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "showrays"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "showrays/txt"
+  parent: "showrays/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1187.0
+    y: 142.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Visa/d\303\266lj r\303\266ntgenstr\303\245lar"
+  font: "Roboto"
+  id: "rays_text"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1189.0
+    y: 39.0
+  }
+  type: TYPE_TEMPLATE
+  id: "reset"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "reset/bg"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "reset"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "\303\205terst\303\244ll"
+  id: "reset/text"
+  parent: "reset/bg"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 464.0
+    y: 570.0
+  }
+  size {
+    x: 245.0
+    y: 305.0
+  }
+  type: TYPE_BOX
+  id: "xraybg1"
+  layer: "marker"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 1.0
+    y: -162.0
+  }
+  size {
+    x: 200.0
+    y: 20.0
+  }
+  type: TYPE_TEXT
+  text: "Ortoradiell projektion"
+  font: "Roboto"
+  id: "orto_text"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "xraybg1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 464.0
+    y: 570.0
+  }
+  size {
+    x: 240.0
+    y: 300.0
+  }
+  color {
+    x: 0.101960786
+    y: 0.101960786
+    z: 0.101960786
+  }
+  type: TYPE_BOX
+  id: "xray1"
+  layer: "marker"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -65.0
+    y: -98.0
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  type: TYPE_PIE
+  id: "Ring"
+  parent: "xray1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 65.0
+    y: -98.0
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  type: TYPE_PIE
+  id: "Ring3"
+  parent: "xray1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -100.0
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  type: TYPE_BOX
+  texture: "test/trinagel"
+  id: "xray_triangle1"
+  parent: "xray1"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 180.0
+    y: 180.0
+  }
+  type: TYPE_BOX
+  texture: "test/up_block"
+  id: "upbox1"
+  parent: "xray1"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 20.0
+    y: 40.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/rektangle"
+  id: "object_ray_fixed1"
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: 10.0
+  }
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/romb"
+  id: "object_ray_fixed2"
+  pivot: PIVOT_N
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -1.999997
+  }
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  color {
+    x: 0.9019608
+    y: 0.9019608
+    z: 0.9019608
+  }
+  type: TYPE_BOX
+  texture: "test/tringel up"
+  id: "object_ray_fixed3"
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -4.666667
+  }
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/tringel down"
+  id: "object_ray_fixed4"
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -4.666667
+  }
+  size {
+    x: 20.0
+    y: 20.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/smallsquare"
+  id: "object_ray_fixed5"
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    y: -4.666667
+  }
+  size {
+    x: 40.0
+    y: 20.0
+  }
+  color {
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
+  }
+  type: TYPE_BOX
+  texture: "test/rektangle_hor"
+  id: "object_ray_fixed6"
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.78
+}
+nodes {
+  position {
+    x: -85.0
+  }
+  rotation {
+    z: 90.0
+  }
+  size {
+    x: 180.0
+  }
+  type: TYPE_BOX
+  id: "cone_left1"
+  pivot: PIVOT_S
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.96
+}
+nodes {
+  position {
+    x: 85.0
+  }
+  rotation {
+    z: -90.0
+  }
+  size {
+    x: 180.0
+  }
+  type: TYPE_BOX
+  id: "cone_right1"
+  pivot: PIVOT_N
+  parent: "xray1"
+  inherit_alpha: true
+  alpha: 0.96
+}
+nodes {
+  position {
+    x: 1188.0
+    y: 176.0
+  }
+  type: TYPE_TEMPLATE
+  id: "fixedangle"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "fixedangle/bg"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "fixedangle"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "fixedangle/check"
+  parent: "fixedangle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "fixedangle/txtbox"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  parent: "fixedangle"
+  overridden_fields: 12
+  overridden_fields: 13
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "fixedangle/txt"
+  parent: "fixedangle/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1187.0
+    y: 203.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "L\303\245st vinkel"
+  font: "Roboto"
+  id: "fixedangle_text"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "ref"
+  inherit_alpha: true
+  alpha: 0.0
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 2286.0
+    y: 1523.0
+    z: 1.0
+  }
+  size {
+    x: 1000.0
+    y: 750.0
+  }
+  type: TYPE_BOX
+  texture: "test/bg"
+  id: "instructions"
+  yanchor: YANCHOR_TOP
+  layer: "top"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -404.0
+    y: 260.0
+    z: 1.0
+  }
+  size {
+    x: 60.0
+    y: 20.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "<text>"
+  font: "Roboto_bold"
+  id: "heading"
+  pivot: PIVOT_NW
+  parent: "instructions"
+  layer: "top"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -404.0
+    y: 213.0
+    z: 1.0
+  }
+  size {
+    x: 800.0
+    y: 450.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "<text>"
+  font: "Roboto"
+  id: "text"
+  pivot: PIVOT_NW
+  line_break: true
+  parent: "instructions"
+  layer: "top"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -303.0
+    y: 303.0
+    z: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "background"
+  parent: "instructions"
+  layer: "top"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "background/bg"
+  parent: "background"
+  layer: "top"
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Bakgrund"
+  id: "background/text"
+  parent: "background/bg"
+  layer: "top"
+  overridden_fields: 8
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -153.0
+    y: 303.0
+    z: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "sim"
+  parent: "instructions"
+  layer: "top"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "sim/bg"
+  parent: "sim"
+  layer: "top"
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Simulatorn"
+  id: "sim/text"
+  parent: "sim/bg"
+  layer: "top"
+  overridden_fields: 8
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -3.0
+    y: 303.0
+    z: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "step"
+  parent: "instructions"
+  layer: "top"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "step/bg"
+  parent: "step"
+  layer: "top"
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Steg f\303\266r steg"
+  id: "step/text"
+  parent: "step/bg"
+  layer: "top"
+  overridden_fields: 8
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 147.0
+    y: 303.0
+    z: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "tips"
+  parent: "instructions"
+  layer: "top"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "tips/bg"
+  parent: "tips"
+  layer: "top"
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Tips"
+  id: "tips/text"
+  parent: "tips/bg"
+  layer: "top"
+  overridden_fields: 8
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 297.0
+    y: 303.0
+    z: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "settings"
+  parent: "instructions"
+  layer: "top"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "settings/bg"
+  parent: "settings"
+  layer: "top"
+  overridden_fields: 20
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Inst\303\244llningar"
+  id: "settings/text"
+  parent: "settings/bg"
+  layer: "top"
+  overridden_fields: 8
+  overridden_fields: 20
+  template_node_child: true
+}
+layers {
+  name: "bg"
+}
+layers {
+  name: "marker"
+}
+layers {
+  name: "bg_text"
+}
+layers {
+  name: "dd"
+}
+layers {
+  name: "dd_text"
+}
+layers {
+  name: "top"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

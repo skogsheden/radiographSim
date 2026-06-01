@@ -1,0 +1,10 @@
+name: "incisor"
+scale_along_z: 0
+embedded_instances {
+  id: "incisor"
+  data: "components {\n"
+  "  id: \"gui\"\n"
+  "  component: \"/main/Incisor/incisor.gui\"\n"
+  "}\n"
+  ""
+}

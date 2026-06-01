@@ -1,0 +1,33 @@
+[bootstrap]
+main_collection = /main/Main/gamemanager.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1280
+height = 800
+high_dpi = 1
+update_frequency = 30
+vsync = 1
+samples = 16
+display_device_info = 1
+
+[android]
+input_method = HiddenInputField
+
+[html5]
+scale_mode = fit
+wasm_streaming = 1
+transparent_graphics_context = 1
+
+[project]
+title = EDR - Image simulation
+version = 0.2.1
+publisher = Skogsheden Radiologikonsult AB
+developer = Nils Gustafsson
+dependencies#0 = https://github.com/skogsheden/dirtydentist/archive/refs/heads/dev.zip
+
+[graphics]
+opengl_version_hint = 0
+

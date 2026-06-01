@@ -1,0 +1,88 @@
+images {
+  image: "/main/Images/incisorfront.png"
+}
+images {
+  image: "/main/Images/incsorxray.png"
+}
+images {
+  image: "/main/Images/insicorside.png"
+}
+images {
+  image: "/main/Images/molar side.png"
+}
+images {
+  image: "/main/Images/sensor.png"
+}
+images {
+  image: "/main/Images/tube.png"
+}
+images {
+  image: "/main/Images/buckal2.png"
+}
+images {
+  image: "/main/Images/palatinal.png"
+}
+images {
+  image: "/main/Images/toothrow.png"
+}
+images {
+  image: "/main/Images/molar1.png"
+}
+images {
+  image: "/main/Images/molar2.png"
+}
+images {
+  image: "/main/Images/preolar 1png.png"
+}
+images {
+  image: "/main/Images/preolar 2.png"
+}
+images {
+  image: "/main/Images/imgtest.png"
+}
+images {
+  image: "/main/Images/buckill.png"
+}
+images {
+  image: "/main/Images/palill.png"
+}
+images {
+  image: "/main/Images/Block.png"
+}
+images {
+  image: "/main/Images/up_block.png"
+}
+images {
+  image: "/main/Images/trinagel.png"
+}
+images {
+  image: "/main/Images/circle_1.png"
+}
+images {
+  image: "/main/Images/cat.png"
+}
+images {
+  image: "/main/Images/butterfly.png"
+}
+images {
+  image: "/main/Images/rektangle.png"
+}
+images {
+  image: "/main/Images/rektangle_hor.png"
+}
+images {
+  image: "/main/Images/romb.png"
+}
+images {
+  image: "/main/Images/smallsquare.png"
+}
+images {
+  image: "/main/Images/tringel down.png"
+}
+images {
+  image: "/main/Images/tringel up.png"
+}
+images {
+  image: "/main/Images/bg.png"
+}
+extrude_borders: 2

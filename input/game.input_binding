@@ -1,0 +1,8 @@
+key_trigger {
+  input: KEY_F2
+  action: "F2"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "touch"
+}

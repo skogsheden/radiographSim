@@ -1,0 +1,10 @@
+images {
+  image: "/main/Main/bg_menu.png"
+}
+images {
+  image: "/main/Main/bg.png"
+}
+images {
+  image: "/main/Main/Skogsheden_logo_2.png"
+}
+extrude_borders: 2

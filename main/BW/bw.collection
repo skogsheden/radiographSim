@@ -1,0 +1,10 @@
+name: "bw"
+scale_along_z: 0
+embedded_instances {
+  id: "gui"
+  data: "components {\n"
+  "  id: \"bw\"\n"
+  "  component: \"/main/BW/bw.gui\"\n"
+  "}\n"
+  ""
+}

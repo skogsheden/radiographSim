@@ -1,0 +1,42 @@
+ddgui = require("dd-gui.ddgui")
+
+function init(self)
+	info = sys.get_sys_info()
+	msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	if ddgui.button(self, action_id, action, "Incisiv", true, false, "Projektion - Incisiv") then
+		msg.post("gamemanager:/gamemanager", "load_inscisor")
+	end
+	if ddgui.button(self, action_id, action, "Molar", true, false, "Projektion - Molar") then
+		msg.post("gamemanager:/gamemanager", "load_molar")
+	end
+	if ddgui.button(self, action_id, action, "Box", true, false, "Lägesbestämning") then
+		msg.post("gamemanager:/gamemanager", "load_box")
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

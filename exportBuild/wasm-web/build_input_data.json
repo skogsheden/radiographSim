@@ -1,0 +1,12 @@
+{
+  "bob_arguments" : {
+    "sha1" : "cddb6eb43c32e4930257fcbbb30f19cf28deb081",
+    "version" : "1.11.2",
+    "timestamp" : "2025-11-05 10:28:40"
+  },
+  "defold_sdk" : "cddb6eb43c32e4930257fcbbb30f19cf28deb081",
+  "dependencies" : [ {
+    "link" : "https://github.com/skogsheden/dirtydentist/archive/refs/heads/dev.zip",
+    "md5" : "28B4872D7CB6C2183AE27FA96925DB7C"
+  } ]
+}

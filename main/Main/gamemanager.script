@@ -1,0 +1,118 @@
+function init(self)
+	msg.post(".", "load_menu")
+	msg.post(".", "acquire_input_focus")
+	print("Loading menu collection...")
+	-- Spåra programstart
+	track_startup()
+end
+
+function url_encode(str)
+	if str then
+		str = string.gsub(str, "\n", "\r\n")
+		str = string.gsub(str, "([^%w %-%_%.%~])",
+		function(c) return string.format("%%%02X", string.byte(c)) end)
+		str = string.gsub(str, " ", "+")
+	end
+	return str
+end
+
+function track_startup()
+	-- Hämta systeminformation
+	local sys_info = sys.get_sys_info()
+
+	-- URL-encode alla värden för säkerhet
+	local device = url_encode(sys_info.device_model or "unknown")
+	local system = url_encode(sys_info.system_name or "unknown")
+	local language = url_encode(sys_info.language or "unknown")
+	local territory = url_encode(sys_info.territory or "unknown")
+
+	-- Förbered data
+	local params = string.format(
+	"device=%s&system=%s&language=%s&territory=%s",
+	device,
+	system,
+	language,
+	territory
+	)
+
+	-- Skicka till PHP-skript med rätt headers
+	local url = "https://skogsheden.se/edr/track_startup.php?" .. params
+
+	-- Lägg till headers för att undvika WAF-blockning
+	local headers = {
+		["User-Agent"] = "Mozilla/5.0 (compatible; DefoldEngine/1.0)",
+		["Accept"] = "application/json, text/plain, */*",
+		["Accept-Language"] = "sv-SE,sv;q=0.9,en;q=0.8",
+		["Referer"] = "https://skogsheden.se/"
+	}
+
+	print("=== SPÅRNING ===")
+	print("URL: " .. url)
+
+	http.request(url, "GET", function(self, id, response)
+		print("=== SVAR ===")
+		print("Status: " .. tostring(response.status))
+
+		if response.status == 200 or response.status == 0 then
+			print("✓ Programstart spårad!")
+			if response.response then
+				print("Svar från server:")
+				print(response.response)
+			end
+		else
+			print("✗ Spårningsfel (kod: " .. tostring(response.status) .. ")")
+			if response.response then
+				print("Serverns felmeddelande:")
+				print(response.response)
+			end
+			if response.error then
+				print("HTTP Error:")
+				print(tostring(response.error))
+			end
+		end
+		print("===============")
+	end, headers)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
+		print("Collection loaded and enabled")
+	end
+
+	if message_id == hash("unload_menu") then
+		msg.post("#menu", "disable")
+		msg.post("#menu", "final")
+		msg.post("#menu", "unload")
+		print("Menu collection unloaded")
+	end
+
+	if message_id == hash("load_menu") then
+		msg.post("#menu", "load")
+		msg.post("#molar", "unload")
+		msg.post("#incisor", "unload")
+		msg.post("#box", "unload")
+	end
+
+	if message_id == hash("load_molar") then
+		msg.post("#menu", "disable")
+		msg.post("#menu", "final")
+		msg.post("#menu", "unload")
+		msg.post("#molar", "load")
+	end
+
+	if message_id == hash("load_inscisor") then
+		msg.post("#menu", "disable")
+		msg.post("#menu", "final")
+		msg.post("#menu", "unload")
+		msg.post("#incisor", "load")
+	end
+
+	if message_id == hash("load_box") then
+		msg.post("#menu", "disable")
+		msg.post("#menu", "final")
+		msg.post("#menu", "unload")
+		msg.post("#box", "load")
+	end
+end

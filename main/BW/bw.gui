@@ -1,0 +1,1232 @@
+script: "/main/BW/bw.gui_script"
+fonts {
+  name: "Roboto"
+  font: "/dd-gui/fonts/Roboto.font"
+}
+textures {
+  name: "bisectris"
+  texture: "/main/Images/bisectris.atlas"
+}
+nodes {
+  position {
+    x: 484.0
+    y: 426.0
+  }
+  size {
+    x: 200.0
+    y: 350.0
+  }
+  type: TYPE_BOX
+  texture: "bisectris/toothrow"
+  id: "toothrow"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 49.0
+    y: 154.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "11d"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 96.0
+    y: 166.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "11m"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 77.0
+    y: 109.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "11p"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 14.0
+    y: 130.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "12d"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 46.0
+    y: 152.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "12m"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 50.0
+    y: 101.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "12p"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 14.0
+    y: 124.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "13m"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -17.0
+    y: 87.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "13d"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 19.0
+    y: 79.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "13p"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -43.0
+    y: 31.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "14db"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -17.0
+    y: 26.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "14dp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -18.0
+    y: 86.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "14mb"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -2.0
+    y: 69.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "14mp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -45.0
+    y: 29.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "15mb"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -18.0
+    y: 15.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "15mp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -35.0
+    y: -33.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "15dp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -68.0
+    y: -22.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "15db"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -69.0
+    y: -27.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "16mb"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -32.0
+    y: -45.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "16mp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -53.0
+    y: -31.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "16mm"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -89.0
+    y: -95.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "16db"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -50.0
+    y: -105.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "16dp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -71.0
+    y: -102.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "16dm"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -86.0
+    y: -104.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "17mb"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -70.0
+    y: -105.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "17mm"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -49.0
+    y: -114.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "17mp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -95.0
+    y: -165.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "17db"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -72.0
+    y: -174.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "17dm"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -50.0
+    y: -166.0
+  }
+  size {
+    x: 5.0
+    y: 5.0
+  }
+  type: TYPE_BOX
+  id: "17dp"
+  parent: "toothrow"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 584.0
+    y: 251.0
+  }
+  rotation {
+    x: -3.789
+    y: -1.589
+    z: -24.758
+  }
+  size {
+    x: 600.0
+    y: 600.0
+  }
+  type: TYPE_BOX
+  id: "tube"
+  pivot: PIVOT_S
+  inherit_alpha: true
+  alpha: 0.0
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -382.54572
+    y: 91.0
+    z: 1.0
+  }
+  size {
+    x: 606.0
+    y: 210.0
+  }
+  color {
+    x: 0.8
+    y: 0.8
+    z: 0.8
+  }
+  type: TYPE_BOX
+  texture: "bisectris/tube"
+  id: "tube_img"
+  pivot: PIVOT_E
+  parent: "tube"
+}
+nodes {
+  position {
+    y: 95.0
+  }
+  size {
+    x: 600.0
+    y: 2.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray1"
+  pivot: PIVOT_W
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    y: 47.5
+  }
+  size {
+    x: 600.0
+    y: 2.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray2"
+  pivot: PIVOT_W
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  size {
+    x: 600.0
+    y: 2.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray3"
+  pivot: PIVOT_W
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    y: -47.5
+  }
+  size {
+    x: 600.0
+    y: 2.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray4"
+  pivot: PIVOT_W
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    y: -95.0
+  }
+  size {
+    x: 600.0
+    y: 2.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "ray5"
+  pivot: PIVOT_W
+  parent: "tube_img"
+  alpha: 0.63
+}
+nodes {
+  position {
+    x: 469.0
+    y: 243.0
+  }
+  rotation {
+    z: -32.0
+  }
+  size {
+    x: 30.0
+    y: 225.0
+  }
+  type: TYPE_BOX
+  texture: "bisectris/sensor"
+  id: "sensor"
+  pivot: PIVOT_S
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -3.5
+    y: 225.0
+  }
+  size {
+    x: 10.0
+    y: 10.0
+  }
+  type: TYPE_BOX
+  id: "top_sensor"
+  parent: "sensor"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -3.5
+  }
+  size {
+    x: 10.0
+    y: 10.0
+  }
+  type: TYPE_BOX
+  id: "bottom_sensor"
+  parent: "sensor"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -3.5
+  }
+  size {
+    x: 4.0
+    y: 203.0
+  }
+  color {
+    x: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "tooth_on_sensor"
+  pivot: PIVOT_S
+  parent: "sensor"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -3.5
+  }
+  size {
+    x: 20.0
+  }
+  color {
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "conecut_bottom"
+  pivot: PIVOT_S
+  parent: "sensor"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -3.5
+    y: 225.0
+  }
+  size {
+    x: 20.0
+  }
+  color {
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "conecut_top"
+  pivot: PIVOT_N
+  parent: "sensor"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 350.0
+    y: 152.0
+  }
+  type: TYPE_TEMPLATE
+  id: "tube_angle"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/bg"
+  parent: "tube_angle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/slider_bg"
+  parent: "tube_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/slider_level"
+  parent: "tube_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/handle"
+  parent: "tube_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/accent"
+  parent: "tube_angle/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_angle/txtbox"
+  parent: "tube_angle/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "tube_angle/txt"
+  parent: "tube_angle/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 350.0
+    y: 95.0
+  }
+  type: TYPE_TEMPLATE
+  id: "tube_posy"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posy/bg"
+  parent: "tube_posy"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posy/slider_bg"
+  parent: "tube_posy/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posy/slider_level"
+  parent: "tube_posy/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posy/handle"
+  parent: "tube_posy/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posy/accent"
+  parent: "tube_posy/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posy/txtbox"
+  parent: "tube_posy/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "tube_posy/txt"
+  parent: "tube_posy/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 120.0
+    y: 153.0
+  }
+  type: TYPE_TEMPLATE
+  id: "sensor_angle"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_angle/bg"
+  parent: "sensor_angle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_angle/slider_bg"
+  parent: "sensor_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_angle/slider_level"
+  parent: "sensor_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_angle/handle"
+  parent: "sensor_angle/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_angle/accent"
+  parent: "sensor_angle/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_angle/txtbox"
+  parent: "sensor_angle/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "sensor_angle/txt"
+  parent: "sensor_angle/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 120.0
+    y: 36.0
+  }
+  type: TYPE_TEMPLATE
+  id: "sensor_posx"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posx/bg"
+  parent: "sensor_posx"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posx/slider_bg"
+  parent: "sensor_posx/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posx/slider_level"
+  parent: "sensor_posx/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posx/handle"
+  parent: "sensor_posx/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posx/accent"
+  parent: "sensor_posx/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posx/txtbox"
+  parent: "sensor_posx/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "sensor_posx/txt"
+  parent: "sensor_posx/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 120.0
+    y: 95.0
+  }
+  type: TYPE_TEMPLATE
+  id: "sensor_posy"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posy/bg"
+  parent: "sensor_posy"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posy/slider_bg"
+  parent: "sensor_posy/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posy/slider_level"
+  parent: "sensor_posy/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posy/handle"
+  parent: "sensor_posy/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posy/accent"
+  parent: "sensor_posy/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "sensor_posy/txtbox"
+  parent: "sensor_posy/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "sensor_posy/txt"
+  parent: "sensor_posy/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 350.0
+    y: 61.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Riktmedel postion X"
+  font: "Roboto"
+  id: "tube_posx_text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 120.0
+    y: 60.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Sensor position X"
+  font: "Roboto"
+  id: "sensor_posx_text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 120.0
+    y: 120.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Sensor position Y"
+  font: "Roboto"
+  id: "sensor_posy_text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 120.0
+    y: 178.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Sensor vinkel"
+  font: "Roboto"
+  id: "sensor_angle_text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 350.0
+    y: 177.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Riktmedel vinkel"
+  font: "Roboto"
+  id: "tube_angle_text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 350.0
+    y: 120.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Riktmedel postion Y"
+  font: "Roboto"
+  id: "tube_posy_text"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 350.0
+    y: 36.0
+  }
+  type: TYPE_TEMPLATE
+  id: "tube_posx"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posx/bg"
+  parent: "tube_posx"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posx/slider_bg"
+  parent: "tube_posx/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posx/slider_level"
+  parent: "tube_posx/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posx/handle"
+  parent: "tube_posx/bg"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posx/accent"
+  parent: "tube_posx/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "tube_posx/txtbox"
+  parent: "tube_posx/handle"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "tube_posx/txt"
+  parent: "tube_posx/txtbox"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 990.0
+    y: 600.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 155.0
+    y: 125.0
+  }
+  type: TYPE_BOX
+  id: "xraybg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 990.0
+    y: 600.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 150.0
+    y: 120.0
+  }
+  color {
+    x: 0.102
+    y: 0.102
+    z: 0.102
+  }
+  type: TYPE_BOX
+  id: "xray"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -76.5
+    y: -1.0
+  }
+  rotation {
+    z: -90.0
+  }
+  size {
+    x: 175.0
+  }
+  type: TYPE_BOX
+  id: "cone_left"
+  pivot: PIVOT_S
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.9
+}
+nodes {
+  position {
+    x: 76.5
+    y: 2.5
+  }
+  rotation {
+    z: -90.0
+  }
+  size {
+    x: 175.0
+  }
+  type: TYPE_BOX
+  id: "cone_right"
+  pivot: PIVOT_N
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.9
+}
+nodes {
+  position {
+    x: -99.0
+    y: 55.0
+  }
+  size {
+    x: 60.0
+    y: 120.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ADD
+  texture: "bisectris/molar2"
+  id: "17"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.83
+}
+nodes {
+  position {
+    x: -43.0
+    y: 54.0
+  }
+  size {
+    x: 60.0
+    y: 120.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ADD
+  texture: "bisectris/molar1"
+  id: "16"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.83
+}
+nodes {
+  position {
+    x: 7.0
+    y: 54.0
+  }
+  size {
+    x: 45.0
+    y: 120.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ADD
+  texture: "bisectris/preolar 2"
+  id: "15"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.83
+}
+nodes {
+  position {
+    x: 50.0
+    y: 54.0
+  }
+  size {
+    x: 45.0
+    y: 120.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_SCREEN
+  texture: "bisectris/preolar 1png"
+  id: "14"
+  parent: "xray"
+  inherit_alpha: true
+  alpha: 0.83
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

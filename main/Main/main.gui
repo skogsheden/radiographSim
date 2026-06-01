@@ -1,0 +1,161 @@
+script: "/main/Main/main-menu.gui_script"
+fonts {
+  name: "Roboto"
+  font: "/dd-gui/fonts/Roboto.font"
+}
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+fonts {
+  name: "Roboto_bold"
+  font: "/main/Roboto_bold.font"
+}
+fonts {
+  name: "Roboto_bold_large"
+  font: "/main/Roboto_bold_large.font"
+}
+textures {
+  name: "menu"
+  texture: "/main/Main/menu.atlas"
+}
+nodes {
+  position {
+    y: 410.0
+  }
+  scale {
+    x: 1.2
+    y: 1.2
+  }
+  size {
+    x: 1350.0
+    y: 780.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "bg"
+  xanchor: XANCHOR_RIGHT
+  pivot: PIVOT_W
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 640.0
+    y: 347.0
+  }
+  type: TYPE_TEMPLATE
+  id: "Molar"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "Molar/bg"
+  parent: "Molar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Projektion - Molar"
+  id: "Molar/text"
+  parent: "Molar/bg"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 640.0
+    y: 485.0
+  }
+  scale {
+    z: 2.0
+  }
+  size {
+    x: 150.0
+    y: 20.0
+  }
+  type: TYPE_TEXT
+  text: "Projektionsl\303\244ra"
+  font: "Roboto_bold_large"
+  id: "gamename"
+  inherit_alpha: true
+  text_leading: 0.0
+}
+nodes {
+  position {
+    x: 640.0
+    y: 393.0
+  }
+  type: TYPE_TEMPLATE
+  id: "Incisiv"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "Incisiv/bg"
+  parent: "Incisiv"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Projektion - Incisiv"
+  id: "Incisiv/text"
+  parent: "Incisiv/bg"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 640.0
+    y: 298.0
+  }
+  type: TYPE_TEMPLATE
+  id: "Box"
+  inherit_alpha: true
+  template: "/dd-gui/prefabs/button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "Box/bg"
+  parent: "Box"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "L\303\244gesbest\303\244mning"
+  id: "Box/text"
+  parent: "Box/bg"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1275.0
+    y: 5.0
+  }
+  size {
+    x: 250.0
+    y: 20.0
+  }
+  type: TYPE_TEXT
+  text: "Skogsheden Radiologikonsult AB"
+  font: "Roboto_bold"
+  id: "text"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  pivot: PIVOT_SE
+  inherit_alpha: true
+}
+layers {
+  name: "bg"
+}
+layers {
+  name: "bg_text"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

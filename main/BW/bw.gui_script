@@ -1,0 +1,388 @@
+ddgui = require("dd-gui.ddgui")
+
+local t11 = {}
+local t12 = {}
+local t13 = {}
+local t14 = {}
+local t15 = {}
+local t16 = {}
+local t17 = {}
+local sensor_lines = {}
+local conecut_right = nil
+local conecut_left = nil
+local go_tube = nil
+local go_line = nil
+local go_sensor = nil
+local go_bottom_sensor = nil
+local go_top_sensor = nil
+local go_rays = {}
+local go_xray = nil
+
+local color_map = {
+	vmath.vector4(1, 0, 0, 1), -- Red
+	vmath.vector4(0, 1, 0, 1), -- Green
+	vmath.vector4(0, 0, 1, 1), -- Blue
+	vmath.vector4(1, 1, 0, 1), -- Yellow
+	vmath.vector4(1, 0, 1, 1), -- Magenta
+	vmath.vector4(0, 1, 1, 1), -- Cyan
+	vmath.vector4(1, 0.5, 0, 1), -- Orange
+	vmath.vector4(0.5, 0, 0.5, 1), -- Purple
+	vmath.vector4(0, 0.5, 0.5, 1), -- Teal
+	vmath.vector4(0.5, 0.5, 0.5, 1) -- Gray
+}
+
+local tube_angle = vmath.vector3()
+local tube_pos = vmath.vector3()
+local sensor_angle = vmath.vector3()
+local sensor_pos = vmath.vector3()
+
+-- Start positions
+local start_sensor_pos = vmath.vector3(0,0,0)
+local start_tube_pos = vmath.vector3(0,0,0)
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	go_tube = gui.get_node("tube")
+	go_line = gui.get_node("tooth_on_sensor")
+	go_sensor = gui.get_node("sensor")
+	go_bottom_sensor = gui.get_node("bottom_sensor")
+	go_top_sensor = gui.get_node("top_sensor")
+	conecut_right = gui.get_node("cone_right")
+	conecut_left = gui.get_node("cone_left")
+	go_xray = gui.get_node("xray")
+
+	start_sensor_pos, sensor_pos = gui.get_position(go_sensor), gui.get_position(go_sensor)
+	start_tube_pos, tube_pos = gui.get_position(go_tube), gui.get_position(go_tube)
+	
+	sensor_lines["base"] = go_line
+	gui.set_position(go_line, vmath.vector3(-3.5,0,0))
+	--Set up lists
+	t11 = {gui.get_node("11d"), gui.get_node("11m"), gui.get_node("11p")}
+	t12 = {gui.get_node("12d"), gui.get_node("12m"), gui.get_node("12p")}
+	t13 = {gui.get_node("13d"), gui.get_node("13m"), gui.get_node("13p")}
+	t14 = {gui.get_node("14db"), gui.get_node("14mb"), gui.get_node("14dp"),gui.get_node("14mp")}
+	t15 = {gui.get_node("15db"), gui.get_node("15mb"), gui.get_node("15dp"),gui.get_node("15mp")}
+	t16 = {gui.get_node("16db"), gui.get_node("16mb"), gui.get_node("16dp"),gui.get_node("16mp"), gui.get_node("16mm"), gui.get_node("16dm"),}
+	t17 = {gui.get_node("17db"), gui.get_node("17mb"), gui.get_node("17dp"),gui.get_node("17mp"), gui.get_node("17mm"), gui.get_node("17dm"),}
+	go_rays = {gui.get_node("ray1"),gui.get_node("ray2"),gui.get_node("ray3"),gui.get_node("ray4"),gui.get_node("ray5")}
+	
+	createnewsensorline("t11", 1)
+	createnewsensorline("t12", 2)
+	createnewsensorline("t13", 3)
+	createnewsensorline("t14", 4)
+	createnewsensorline("t15", 5)
+	createnewsensorline("t16", 6)
+	createnewsensorline("t17", 7)
+	gui.set_enabled(go_line, false)
+end
+
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	for i = 1, #t17 do
+		checkifintresect("t17", t17, go_sensor,2)
+	end
+	for i = 1, #t16 do
+		checkifintresect("t16", t16, go_sensor,4)
+	end
+	for i = 1, #t15 do
+		checkifintresect("t15", t15, go_sensor,6)
+	end
+	for i = 1, #t14 do
+		checkifintresect("t14", t14, go_sensor,2)
+	end
+	for i = 1, #t13 do
+		checkifintresect("t13", t13, go_sensor,4)
+	end
+	for i = 1, #t12 do
+		checkifintresect("t12", t12, go_sensor,6)
+	end
+	for i = 1, #t11 do
+		checkifintresect("t11", t11, go_sensor,2)
+	end
+	checkforconecut()
+end
+
+function on_input(self, action_id, action)
+	sensor_angle.z = -ddgui.slider(self, action_id, action, "sensor_angle", true, true, 0, 90)
+	sensor_pos.y = start_sensor_pos.y + ddgui.slider(self, action_id, action, "sensor_posy", true, true, -90, 90)
+	sensor_pos.x = start_sensor_pos.x + ddgui.slider(self, action_id, action, "sensor_posx", true, true, -60, 60)
+	tube_angle.z = -ddgui.slider(self, action_id, action, "tube_angle", true, true, 0, 90)
+	tube_pos.y = start_tube_pos.y + ddgui.slider(self, action_id, action, "tube_posy", true, true, -120, 120)
+	tube_pos.x = start_tube_pos.x + ddgui.slider(self, action_id, action, "tube_posx", true, true, -60, 60)
+	print(tube_pos)
+	gui.set_euler(go_sensor, sensor_angle)
+	gui.set_euler(go_tube, tube_angle)
+	gui.set_position(go_sensor, sensor_pos)
+	gui.set_position(go_tube, tube_pos)
+	
+	gui.set_euler(go_tube, tube_angle)
+end
+
+function checkforconecut()
+	local length = vmath.length(get_scaled_position(go_top_sensor)-get_scaled_position(go_bottom_sensor))
+	
+	for i = 1, #go_rays do
+		-- Check collison with sensor and adjust beam length
+		local collsion_ray, position_ray = vectors_intersect(get_scaled_position(go_rays[i]), tube_angle.z, 1000, get_scaled_position(go_sensor), sensor_angle.z+90, length)
+		if collsion_ray then
+			local distance_ray_sensor = vmath.length(position_ray-get_scaled_position(go_rays[i]))
+			local ray_size = gui.get_size(go_rays[i])
+			ray_size.x = distance_ray_sensor
+			gui.set_size(go_rays[i], ray_size)			
+		else
+			local ray_size = gui.get_size(go_rays[i])
+			ray_size.x = 10000
+			gui.set_size(go_rays[i], ray_size)
+		end
+
+		-- Draw conecut
+		if i == 1 or i == #go_rays then
+			if i == #go_rays then
+				if collsion_ray then
+					local cut_size = gui.get_size(conecut_left)
+					cut_size.y = (vmath.length(position_ray-get_scaled_position(go_sensor))/length) * gui.get_size(go_xray).y
+					gui.set_size(conecut_left, cut_size)
+				else
+					local cut_size = gui.get_size(conecut_left)
+					cut_size.y = 0
+					gui.set_size(conecut_left, cut_size)
+				end
+			else
+				if collsion_ray then
+					local cut_size = gui.get_size(conecut_right)
+					cut_size.y = (length-vmath.length(position_ray-get_scaled_position(go_sensor)))/length * gui.get_size(go_xray).y
+					gui.set_size(conecut_right, cut_size)
+				else
+					local cut_size = gui.get_size(conecut_right)
+					cut_size.y = 0
+					gui.set_size(conecut_right, cut_size)
+				end
+			end
+		end	
+	end
+end
+
+
+function createnewsensorline(id, color)
+	local angle = gui.get_euler(go_tube)
+	local newline = gui.clone(go_line)
+	gui.set_parent(newline, gui.get_node("sensor"))
+	sensor_lines[id] = newline
+	gui.set(newline, "color", color_map[color])
+end
+
+function checkifintresect(id, list, sensor, width)
+	local angle = gui.get_euler(go_tube)
+	local collison = false
+	local ymin = 9999
+	local ymax = 0
+	local length = vmath.length(get_scaled_position(go_top_sensor)-get_scaled_position(go_bottom_sensor))
+	for i = 1, #list do
+		local line = sensor_lines[id]
+		local intersect, position = vectors_intersect(get_scaled_position(list[i]), angle.z, 1000, get_scaled_position(go_bottom_sensor), sensor_angle.z+90, 1000)
+		local intersect2, position2 = vectors_intersect(get_scaled_position(list[i]), angle.z, 1000, get_scaled_position(go_bottom_sensor), sensor_angle.z-90, 1000)
+		local distance_from_sensor_bottom = 0
+		if intersect then
+			distance_from_sensor_bottom = vmath.length(position - get_scaled_position(go_bottom_sensor))
+			if distance_from_sensor_bottom < ymin then
+				ymin = distance_from_sensor_bottom
+				debug_print(list[i], angle.z, 1000, i)
+			elseif distance_from_sensor_bottom > ymax then
+				ymax = distance_from_sensor_bottom
+				debug_print(list[i], angle.z, 1000, i)
+			end
+			collison = true
+		end
+		if intersect2 then
+			distance_from_sensor_bottom = vmath.length(position2 - get_scaled_position(go_bottom_sensor))
+			if -distance_from_sensor_bottom < ymin then
+				ymin = -distance_from_sensor_bottom
+			end
+			collison = true
+		end
+	end
+	if ymin == 9999 or ymin == ymax then
+		ymin = 0
+	end 
+	if ymax > length then
+		ymax = length
+	end
+	if collison then
+		gui.set_position(sensor_lines[id], vmath.vector3(-3.5,ymin,0))
+		gui.set_size(sensor_lines[id], vmath.vector3(width,ymax-ymin,0))
+	end
+end
+
+function debug_print(node, angle, length, color_input)
+	local color = color_map[color_input]
+	local vector_start = get_scaled_position(node)
+	local original_width = tonumber(sys.get_config("display.width"))
+	local original_height = tonumber(sys.get_config("display.height"))
+	local window_width, window_height = window.get_size()
+	local scale_x = window_width / original_width
+	local scale_y = window_height / original_height
+	local vector_direction = angle_to_unit_vector(angle)
+	local adjusted_direction = vmath.vector3(
+	vector_direction.x * scale_x,
+	vector_direction.y * scale_y,
+	0
+	)
+	local vector_end = vector_start + adjusted_direction * length
+	msg.post("@render:", "draw_line", { start_point = vector_start, end_point = vector_end, color = color })
+end
+
+
+function screen_to_local_position(node, screen_pos)
+	-- Get the original resolution from the game.project file
+	local original_width = tonumber(sys.get_config("display.width"))
+	local original_height = tonumber(sys.get_config("display.height"))
+
+	-- Get the current window size
+	local window_width, window_height = window.get_size()
+
+	-- Calculate the scale factors for both width and height
+	local scale_x = window_width / original_width
+	local scale_y = window_height / original_height
+
+	-- Use the minimum scale factor to maintain aspect ratio
+	local scale_factor = math.min(scale_x, scale_y)
+
+	-- Get the screen position of the node
+	local node_screen_pos = gui.get_screen_position(node)
+
+	-- Subtract the node's screen position to align with its local coordinate system
+	local local_pos = vmath.vector3(
+	(screen_pos.x - node_screen_pos.x) / scale_factor,
+	(screen_pos.y - node_screen_pos.y) / scale_factor,
+	0)
+
+	return local_pos
+end
+
+
+function get_scaled_position(node)
+	-- Get the original resolution from the game.project file
+	local original_width = tonumber(sys.get_config("display.width"))
+	local original_height = tonumber(sys.get_config("display.height"))
+
+	-- Get the current window size
+	local window_width, window_height = window.get_size()
+
+	-- Calculate the scale factors for both width and height
+	local scale_x = window_width / original_width
+	local scale_y = window_height / original_height
+
+	-- Get the screen position of the node
+	local screen_position = gui.get_screen_position(node)
+
+	-- Apply the scale factors
+	local scaled_position = vmath.vector3(
+	screen_position.x / scale_x,  -- Scale using the width factor
+	screen_position.y / scale_y,  -- Scale using the height factor
+	screen_position.z  -- Z doesn't need scaling for 2D
+)
+return scaled_position
+end
+
+
+function caluclate_end_of_line(node)
+	local end_x = gui.get_position(node).x + gui.get_size(node).y * math.cos(math.rad(-gui.get_euler(node).z))
+	local end_y = gui.get_position(node).y + gui.get_size(node).y * math.sin(math.rad(-gui.get_euler(node).z))
+	return end_x, end_y
+end
+
+
+function calculate_end_of_line_screen(node)
+	local screen_pos = get_scaled_position(node)
+	local end_x = screen_pos.x + gui.get_size(node).y * math.cos(math.rad(-gui.get_euler(node).z))
+	local end_y = screen_pos.y + gui.get_size(node).y * math.sin(math.rad(-gui.get_euler(node).z))
+	return end_x, end_y
+end
+
+function angle_between_vectors(v1, v2)
+	-- Create direction vectors
+	local direction = vmath.normalize(v2 - v1)
+
+	-- Reference vector (to measure the angle against, like the x-axis)
+	local reference = vmath.vector3(1, 0, 0) 
+
+	-- Calculate the dot product of the vectors
+	local dot_product = vmath.dot(direction, reference)
+
+	-- Calculate the magnitudes of each vector (should be 1 for normalized vectors)
+	local magnitude_v1 = vmath.length(direction)
+	local magnitude_v2 = vmath.length(reference)
+
+	-- Make sure the magnitudes are non-zero to prevent division by zero
+	if magnitude_v1 == 0 or magnitude_v2 == 0 then
+		return 0
+	end
+
+	-- Calculate the cosine of the angle
+	local cos_theta = dot_product / (magnitude_v1 * magnitude_v2)
+
+	-- Clamp the cosine value to the range [-1, 1] to avoid errors due to floating-point inaccuracies
+	cos_theta = math.min(1, math.max(-1, cos_theta))
+
+	-- Calculate the angle in radians using arccos (math.acos)
+	local angle_radians = math.acos(cos_theta)
+
+	-- Convert the angle to degrees
+	local angle_degrees = math.deg(angle_radians)
+
+	-- Determine if the angle should be positive or negative based on the y-axis
+	if direction.y < 0 then
+		angle_degrees = -angle_degrees
+	end
+
+	return angle_degrees
+end
+
+function angle_to_unit_vector(angle)
+	local rad = math.rad(angle)
+	return vmath.vector3(math.cos(rad), math.sin(rad), 0)
+end
+
+function vectors_intersect(start1, angle1, length1, start2, angle2, length2)
+	-- Calculate the unit direction vectors from the angles
+	local direction1 = angle_to_unit_vector(angle1)
+	local direction2 = angle_to_unit_vector(angle2)
+
+	-- Calculate the endpoints of both vectors
+	local end1 = start1 + direction1 * length1
+	local end2 = start2 + direction2 * length2
+
+	-- Define the vectors r and s
+	local r = end1 - start1
+	local s = end2 - start2
+
+	-- Calculate the cross product determinant (2D only, so we only need the z-component)
+	local cross_r_s = r.x * s.y - r.y * s.x
+
+	-- Floating-point precision tolerance
+	local epsilon = 1e-6
+
+	-- If cross product is close to 0, the vectors are parallel (no intersection)
+	if math.abs(cross_r_s) < epsilon then
+		return false, nil  -- No intersection
+	end
+
+	-- Calculate t and u for parametric intersection
+	local t = ((start2.x - start1.x) * s.y - (start2.y - start1.y) * s.x) / cross_r_s
+	local u = ((start2.x - start1.x) * r.y - (start2.y - start1.y) * r.x) / cross_r_s
+
+	-- Check if both t and u are within the range [0, 1], meaning the vectors intersect within their segments
+	if t >= 0 and t <= 1 and u >= 0 and u <= 1 then
+		-- Calculate the intersection point using parametric form
+		local intersection = start1 + r * t
+		return true, intersection
+	else
+		return false, nil  -- No intersection within the segments
+	end
+end

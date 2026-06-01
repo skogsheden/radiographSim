@@ -1,0 +1,10 @@
+name: "block"
+scale_along_z: 0
+embedded_instances {
+  id: "block"
+  data: "components {\n"
+  "  id: \"gui\"\n"
+  "  component: \"/main/Block/block.gui\"\n"
+  "}\n"
+  ""
+}

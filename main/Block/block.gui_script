@@ -1,0 +1,551 @@
+ddgui = require("dd-gui.ddgui")
+local game_data = require("main.Main.game_data")
+
+-- Input values
+local tube_angle = vmath.vector3()
+local show_rays = true
+local show_lines = nil
+
+-- Nodes
+local go_tube = nil
+local go_sensor = nil
+local go_triangle = nil
+local go_corner_right = nil
+local go_corner_left = nil
+local go_rays = {}
+local go_objects = {}
+local go_rayobjects = {}
+local go_rayobjects_fixed = {}
+
+--Positions
+local go_xray_triangle_pos = vmath.vector3(0,0,0)
+
+-- Sort system
+local go_sortboxes = {}
+local sort_slots = {}       -- världspos för varje slot
+local drag_node = nil
+local drag_node_index = nil
+
+local num_active_objects = 6      -- how many structures to show (2-6)
+local show_feedback = true        -- show correct/incorrect color immediately
+local fixed_angle_mode = false    -- angle is randomized and locked
+local fixed_case_generation = false
+local debug_mode = false
+
+-- Instructions pane
+local instructions = {
+	node		= nil,
+	active		= false,
+	id			= 1,
+	header		= nil,
+	text		= nil,
+}
+local help_button = "Hjälp"
+local correct_button = "Visa rättning"
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	math.randomseed(os.time())
+	
+	--Set nodes
+	go_tube = gui.get_node("tube")
+	go_sensor = gui.get_node("sensor")
+	go_triangle = gui.get_node("triangel")
+	go_rays = {gui.get_node("ray1"),gui.get_node("ray2"),gui.get_node("ray3"),gui.get_node("ray4"),gui.get_node("ray5")}
+	go_objects = {gui.get_node("object1"),gui.get_node("object2"),gui.get_node("object3"),gui.get_node("object4"),gui.get_node("object5"),gui.get_node("object6")}
+	go_rayobjects = {gui.get_node("object_ray1"),gui.get_node("object_ray2"),gui.get_node("object_ray3"),gui.get_node("object_ray4"),gui.get_node("object_ray5"),gui.get_node("object_ray6")}
+	go_rayobjects_fixed = {gui.get_node("object_ray_fixed1"),gui.get_node("object_ray_fixed2"),gui.get_node("object_ray_fixed3"),gui.get_node("object_ray_fixed4"),gui.get_node("object_ray_fixed5"),gui.get_node("object_ray_fixed6")}
+
+	instructions.node = gui.get_node("instructions")
+	instructions.header = gui.get_node("heading")
+	instructions.text = gui.get_node("text")
+	
+	go_xray_triangle = gui.get_node("xray_triangle")
+	go_corner_left = gui.get_node("corner_left")
+	go_corner_right = gui.get_node("corner_right")
+	
+	-- Image nodes
+	go_cone_left = gui.get_node("cone_left")
+	go_cone_right = gui.get_node("cone_right")
+
+	-- Setup vectors
+	tube_angle = gui.get_euler(go_tube)
+
+	-- Detect mobile device so dd-gui scales touch targets correctly
+	ddgui.check_device(self)
+
+	-- Set start values for sliders
+	ddgui.setValueSlider(self, "tube_angle", 0, -30, 30)
+	gui.set_size(go_triangle,vmath.vector3(10,world_dist(go_triangle, go_sensor),0))
+
+	--Positions
+	go_xray_triangle_pos = gui.get_position(go_xray_triangle)
+	
+	setup_sort(self)
+	new_case(self)
+
+	--Debug
+	gui.set_enabled(gui.get_node("showlines/bg"), false)
+	gui.set_enabled(gui.get_node("showlines/txtbox"), false)
+	gui.set_enabled(gui.get_node("lines_text"), false)
+
+	--exammode
+	if game_data.exammode then
+		pprint("exammode")
+		fixed_angle_mode = true
+		gui.set_enabled(gui.get_node("fixedangle/bg"), false)
+		gui.set_enabled(gui.get_node("fixedangle/txtbox"), false)
+		gui.set_enabled(gui.get_node("fixedangle_text"), false)
+		gui.set_enabled(gui.get_node("reset/bg"), false)
+	end
+		
+end
+
+function on_input(self, action_id, action)
+	-- Go back to mainmenu
+	if ddgui.button(self, action_id, action, "menu", true, false, "<") then
+		msg.post("gamemanager:/gamemanager", "load_menu")	
+	end
+
+
+	-- Turn on/off debug
+	if action_id == hash("F2") and action.pressed then
+		if debug_mode then
+			gui.set_enabled(gui.get_node("showlines/bg"), false)
+			gui.set_enabled(gui.get_node("showlines/txtbox"), false)
+			gui.set_enabled(gui.get_node("lines_text"), false)
+			debug_mode = false
+		else
+			gui.set_enabled(gui.get_node("showlines/bg"), true)
+			gui.set_enabled(gui.get_node("showlines/txtbox"), true)
+			gui.set_enabled(gui.get_node("lines_text"), true)
+			debug_mode = true
+		end
+	end
+
+	-- Handle instruktions pane and other functions when helt is closed
+	instructions.active = ddgui.togglebutton(self, action_id, action, "help", true, help_button)
+	if instructions.active then
+		gui.set_position(instructions.node, vmath.vector3(775,380,0))
+		gui.set_text(instructions.header, game_data.sections[instructions.id].title)
+		gui.set_text(instructions.text, game_data.sections[instructions.id].body)
+
+		if ddgui.button(self, action_id, action, "background", true, false) then
+			instructions.id = 1
+		elseif ddgui.button(self, action_id, action, "sim", true, false) then
+			instructions.id = 2
+		elseif ddgui.button(self, action_id, action, "step", true, false) then
+			instructions.id = 3
+		elseif ddgui.button(self, action_id, action, "tips", true, false) then
+			instructions.id = 4
+		elseif ddgui.button(self, action_id, action, "settings", true, false) then
+			instructions.id = 5
+		end
+
+		help_button = "Stäng hjälp"
+		
+	elseif not instructions.active then
+		gui.set_position(instructions.node, vmath.vector3(9999,9999,0))
+		instructions.id = 1
+		help_button = "Hjälp"
+
+		-- Input form slider
+		tube_angle.z = -ddgui.slider(self, action_id, action, "tube_angle", true, true, -30, 30)
+		-- Input form cehckboxes
+		show_rays = ddgui.checkbox(self, action_id, action, "showrays", true, true)
+		
+		
+		
+		if game_data.exammode == false then 
+			fixed_angle_mode = ddgui.checkbox(self, action_id, action, "fixedangle", true, false)
+			gui.set_enabled(gui.get_node("reset/bg"), true)
+		end
+		if debug_mode then
+			show_lines = ddgui.checkbox(self, action_id, action, "showlines", true, false)
+		end
+		-- Input from combobox
+		local combo_val = ddgui.combobox(self, action_id, action, "combobox", {"2", "3", "4", "5", "6"}, true, false, false, "4")
+		if combo_val then
+			local new_count = tonumber(combo_val)
+			if new_count and new_count >= 2 and new_count <= 6 and new_count ~= num_active_objects then
+				num_active_objects = new_count
+				new_case(self)
+			end
+		end
+		-- input from buttons
+		show_feedback = ddgui.togglebutton(self, action_id, action, "correct", true, correct_button)
+		if show_feedback then
+			correct_button = "Dölj rättning"
+		else
+			correct_button= "Visa rättning"
+		end
+		if ddgui.button(self, action_id, action, "newcase", true, false) then
+			new_case(self)
+		end
+		if ddgui.button(self, action_id, action, "reset", true, false) and fixed_angle_mode == false then
+			ddgui.setValueSlider(self, "tube_angle", 0, -30, 30)
+		end
+	end
+
+	local angle_rad = math.rad(tube_angle.z)
+	
+	for i = 1, #go_rays do
+		gui.set_visible(go_rays[i], show_rays)
+
+		local a = get_world_pos(go_rays[i])
+		local b = vmath.vector3(a.x, get_world_pos(go_sensor).y, a.z)
+		local dist_y = vmath.length(a - b)
+		local parent_scale = get_parent_world_scale(go_rays[i])
+
+		gui.set_size(go_rays[i], vmath.vector3(2, dist_y / math.cos(angle_rad) / parent_scale.y, 0))
+	end
+	
+	-- Update positions and angles of main objects
+	if fixed_angle_mode == false then
+		gui.set_euler(go_tube, tube_angle)
+		gui.set_enabled(gui.get_node("tube_angle/bg"), true)
+		gui.set_enabled(gui.get_node("tube_angle_text"), true)
+		fixed_case_generation = false
+	else
+		if fixed_case_generation == false then
+			new_case(self)
+			fixed_case_generation = true
+		end
+		gui.set_euler(go_tube, vmath.vector3(0,0,0))
+		gui.set_enabled(gui.get_node("tube_angle/bg"), false)
+		gui.set_enabled(gui.get_node("tube_angle_text"), false)
+	end
+	gui.set_euler(go_triangle, tube_angle)
+	gui.set_euler(go_corner_left, tube_angle)
+	gui.set_euler(go_corner_right, tube_angle)
+	
+	gui.set_size(go_triangle,vmath.vector3(2 ,world_dist(go_triangle, go_sensor) / math.cos(angle_rad),0))
+	gui.set_size(go_corner_left,vmath.vector3(2 ,world_dist(go_corner_left, go_sensor) / math.cos(angle_rad),0))
+	gui.set_size(go_corner_right,vmath.vector3(2 ,world_dist(go_corner_right, go_sensor) / math.cos(angle_rad),0))
+	gui.set_visible(go_corner_right, show_lines)
+	gui.set_visible(go_triangle, show_lines)
+	gui.set_visible(go_corner_left, show_lines)
+
+	gui.set_size(go_triangle,vmath.vector3(2 ,world_dist(go_triangle, go_sensor) / math.cos(angle_rad),0))
+	go_xray_triangle_pos = vmath.vector3(world_dist(go_triangle, go_sensor) * math.tan(angle_rad),go_xray_triangle_pos.y,go_xray_triangle_pos.z)
+	gui.set_position(go_xray_triangle, go_xray_triangle_pos)
+
+	for i = 1, #go_objects do
+		gui.set_euler(go_objects[i], tube_angle)
+		gui.set_size(go_objects[i],vmath.vector3(2 ,world_dist(go_objects[i], go_sensor) / math.cos(angle_rad),0))
+		local pos_obj = gui.get_position(go_objects[i])
+		local pos_ray = gui.get_position(go_rayobjects[i])
+		obj_pos = vmath.vector3(world_dist(go_objects[i], go_sensor) * math.tan(angle_rad)+pos_obj.x,pos_ray.y,pos_ray.z)
+		gui.set_position(go_rayobjects[i], obj_pos)
+		gui.set_visible(go_objects[i], show_lines)
+	end
+
+	gui.set_size(go_cone_left,  vmath.vector3(180, -world_dist(go_corner_left,  go_sensor) * math.tan(angle_rad), 0))
+	gui.set_size(go_cone_right, vmath.vector3(180, -world_dist(go_corner_right, go_sensor) * math.tan(angle_rad), 0))
+	
+	--Sorting
+	if action_id == hash("touch") then
+		if action.pressed then
+			for i = 1, #go_sortboxes do
+				if gui.pick_node(go_sortboxes[i].node, action.x, action.y) then
+					drag_node = go_sortboxes[i].node
+					drag_node_index = i
+					go_sortboxes[drag_node_index].in_box = false
+					sort_slots[go_sortboxes[drag_node_index].slot_index].taken = false
+					gui.set_color(drag_node, vmath.vector4(1, 1, 1, 1)) -- reset to white
+					gui.set_layer(drag_node, "top")
+				end
+			end
+		elseif action.released and drag_node then
+			gui.set_layer(drag_node, "")
+			for i = 1, #sort_slots do
+				if go_sortboxes[drag_node_index].current_pos.y > (sort_slots[i].pos.y - sort_slots[i].size.y/2) and go_sortboxes[drag_node_index].current_pos.y < (sort_slots[i].pos.y + sort_slots[i].size.y/2) then
+					if go_sortboxes[drag_node_index].current_pos.x > (sort_slots[i].pos.x - sort_slots[i].size.x/2) and go_sortboxes[drag_node_index].current_pos.x < (sort_slots[i].pos.x + sort_slots[i].size.x/2) then
+						if sort_slots[i].taken == false and sort_slots[i].active then
+							go_sortboxes[drag_node_index].in_box = true
+							go_sortboxes[drag_node_index].slot_index = i
+							sort_slots[i].taken = true
+							gui.set_position(go_sortboxes[drag_node_index].node, sort_slots[i].pos)
+							pprint(sort_slots[i].pos)
+
+							if sort_slots[i].correct_index == drag_node_index then
+								go_sortboxes[drag_node_index].correct = true
+							else
+								go_sortboxes[drag_node_index].correct = false
+							end
+						end
+					end
+				end
+			end
+			
+			if go_sortboxes[drag_node_index].in_box == false then
+				gui.set_position(drag_node, go_sortboxes[drag_node_index].start_pos)
+			end
+			drag_node = nil
+			drag_node_index = nil
+		end
+
+		if drag_node then
+			local gx, gy = screen_to_gui(action.x, action.y)
+			gui.set_position(drag_node, vmath.vector3(gx, gy, 0))
+			go_sortboxes[drag_node_index].current_pos = gui.get_position(drag_node)
+		end
+	end
+end
+
+function update(self, dt)
+	show_feedback_update()
+end
+
+function screen_to_gui(action_x, action_y)
+	local base_w = sys.get_config_int("display.width")
+	local base_h = sys.get_config_int("display.height")
+	local win_w, win_h = window.get_size()
+
+	local scale = math.min(win_w / base_w, win_h / base_h)
+	local offset_x = (win_w - base_w * scale) * 0.5
+	local offset_y = (win_h - base_h * scale) * 0.5
+
+	local gui_x = (action_x * win_w / base_w) / scale
+	local gui_y = (action_y * win_h / base_h - offset_y) / scale
+
+	return gui_x, gui_y
+end
+
+function show_feedback_update(self)
+	for i = 1, #go_sortboxes do
+		if go_sortboxes[i].correct and show_feedback and go_sortboxes[i].in_box then
+			gui.set_color(go_sortboxes[i].node, vmath.vector4(0, 1, 0, 1)) -- green
+		elseif go_sortboxes[i].correct == false and show_feedback and go_sortboxes[i].in_box then
+			gui.set_color(go_sortboxes[i].node, vmath.vector4(1, 0, 0, 1)) -- red
+		else
+			gui.set_color(go_sortboxes[i].node, vmath.vector4(1, 1, 1, 1)) -- white
+		end
+	end
+end
+
+
+function spawn_objects_random(objects, x_min, x_max, y_min, y_max, min_spacing)
+	local positions = {}
+
+	for i = 1, #objects do
+		local attempts = 0
+		local x, y
+		repeat
+			x = x_min + math.random() * (x_max - x_min)
+			y = y_min + math.random() * (y_max - y_min)
+			local valid = true
+			for _, other in ipairs(positions) do
+				if math.abs(y - other.y) < min_spacing then
+					valid = false
+					break
+				end
+			end
+			attempts = attempts + 1
+			if valid then
+				table.insert(positions, {x = x, y = y})
+				break
+			end
+		until attempts > 100
+	end
+
+	for i = 1, #objects do
+		local pos = gui.get_position(objects[i])
+		gui.set_position(objects[i], vmath.vector3(positions[i].x, positions[i].y, pos.z))
+	end
+end
+
+function get_parent_world_scale(node)
+	local scale = vmath.vector3(1, 1, 1)
+	local parent = gui.get_parent(node)
+	while parent ~= nil do
+		local ps = gui.get_scale(parent)
+		scale.x = scale.x * ps.x
+		scale.y = scale.y * ps.y
+		parent = gui.get_parent(parent)
+	end
+	return scale
+end
+
+function screen_to_local_position(node, screen_pos)
+	-- Get the original resolution from the game.project file
+	local original_width = tonumber(sys.get_config("display.width"))
+	local original_height = tonumber(sys.get_config("display.height"))
+
+	-- Get the current window size
+	local window_width, window_height = window.get_size()
+
+	-- Calculate the scale factors for both width and height
+	local scale_x = window_width / original_width
+	local scale_y = window_height / original_height
+
+	-- Use the minimum scale factor to maintain aspect ratio
+	local scale_factor = math.min(scale_x, scale_y)
+
+	-- Get the screen position of the node
+	local node_screen_pos = gui.get_screen_position(node)
+
+	-- Subtract the node's screen position to align with its local coordinate system
+	local local_pos = vmath.vector3(
+	(screen_pos.x - node_screen_pos.x) / scale_factor,
+	(screen_pos.y - node_screen_pos.y) / scale_factor,
+	0)
+
+return local_pos
+end
+
+function world_dist(node_a, node_b)
+	local a = get_world_pos(node_a)
+	local b = get_world_pos(node_b)
+	return vmath.length(a - b)
+end
+
+function get_world_pos(node)
+	local pos = gui.get_position(node)
+	local parent = gui.get_parent(node)
+	while parent ~= nil do
+		local ps = gui.get_scale(parent)
+		local pp = gui.get_position(parent)
+		local pr = math.rad(gui.get_euler(parent).z)
+		local rx = pos.x * ps.x
+		local ry = pos.y * ps.y
+		pos = vmath.vector3(
+		pp.x + rx * math.cos(pr) - ry * math.sin(pr),
+		pp.y + rx * math.sin(pr) + ry * math.cos(pr),
+		0
+	)
+	parent = gui.get_parent(parent)
+end
+return pos
+end
+
+function get_scaled_position(node)
+	-- Get the original resolution from the game.project file
+	local original_width = tonumber(sys.get_config("display.width"))
+	local original_height = tonumber(sys.get_config("display.height"))
+
+	-- Get the current window size
+	local window_width, window_height = window.get_size()
+
+	-- Calculate the scale factors for both width and height
+	local scale_x = window_width / original_width
+	local scale_y = window_height / original_height
+
+	-- Get the screen position of the node
+	local screen_position = gui.get_screen_position(node)
+
+	-- Apply the scale factors
+	local scaled_position = vmath.vector3(
+	screen_position.x / scale_x,  -- Scale using the width factor
+	screen_position.y / scale_y,  -- Scale using the height factor
+	screen_position.z  -- Z doesn't need scaling for 2D
+)
+return scaled_position
+end
+
+	-- New case
+function new_case(self)
+	spawn_objects_random(go_objects, -25, 25, 15, 250, 20)
+	spawn_objects_random(go_rayobjects, 0, 0, -50, 50, 5)
+	
+	for i = 1, #go_rayobjects do
+		local obj_pos = gui.get_position(go_objects[i])
+		local ray_pos = gui.get_position(go_rayobjects[i])
+		local newpos = vmath.vector3(obj_pos.x, ray_pos.y, 1)
+		gui.set_position(go_rayobjects_fixed[i], newpos)
+		gui.set_position(go_rayobjects[i], newpos)
+	end
+
+	apply_active_objects()
+	reset_sort_system(self)
+
+	-- Fixed angle mode: pick a random angle and set it
+	if fixed_angle_mode then
+		local random_angle = math.random(10, 20) * (math.random(2) == 1 and 1 or -1)
+		tube_angle.z = -random_angle
+		ddgui.setValueSlider(self, "tube_angle", random_angle, -30, 30)
+	end
+end
+
+	-- Show/hide objects & ray projections based on num_active_objects
+function apply_active_objects()
+	for i = 1, 6 do
+		local visible = (i <= num_active_objects)
+		-- Don't force-show here; the line visibility is handled in on_input
+		gui.set_visible(go_rayobjects_fixed[i], visible)
+		gui.set_visible(go_rayobjects[i], visible)
+		gui.set_enabled(go_objects[i], visible)
+	end
+end
+
+function setup_sort(self)
+	go_sort_area = gui.get_node("sortspace")
+	go_sortboxes = {}
+	for i = 1, 6 do
+		local node = gui.get_node("sortbox" .. i)
+		local pos  = gui.get_position(node)
+		go_sortboxes[i] = {
+			node        = node,
+			start_pos   = vmath.vector3(pos.x, pos.y, pos.z),
+			current_pos = vmath.vector3(pos.x, pos.y, pos.z),
+			in_box      = false,
+			slot_index  = i,
+			index       = i,
+			correct     = false,
+		}
+	end
+	sort_slots = {}
+	for i = 1, 6 do
+		local node = gui.get_node("box" .. i)
+		sort_slots[i] = {
+			node          = node,
+			size          = gui.get_size(node),
+			pos           = gui.get_position(node),
+			taken         = false,
+			correct       = false,
+			correct_index = nil,
+		}
+	end
+	reset_sort_system(self)
+end
+
+function reset_sort_system(self)
+	for i = 1, 6 do
+		local box = go_sortboxes[i]
+		gui.set_position(box.node, box.start_pos)
+		box.current_pos = vmath.vector3(box.start_pos.x, box.start_pos.y, box.start_pos.z)
+		box.in_box    = false
+		box.index     = i
+		box.correct   = false
+		gui.set_color(box.node, vmath.vector4(1, 1, 1, 1))
+		gui.set_enabled(box.node, (i <= num_active_objects))
+	end
+	for i = 1, 6 do
+		local slot = sort_slots[i]
+		slot.taken			= false
+		slot.correct		= false
+		slot.correct_index	= nil
+		if i > 6-num_active_objects then
+			slot.active		= true
+			gui.set_enabled(slot.node, true)
+		else
+			slot.active		= false
+			gui.set_enabled(slot.node, false)
+		end
+	end
+	-- Build ranked distance list
+	local ranked = {}
+	for i = 1, num_active_objects do
+		local sens_pos = gui.get_screen_position(go_sensor)
+		local obj_pos  = gui.get_screen_position(go_objects[i])
+		ranked[#ranked + 1] = { index = i, dist = obj_pos.y - sens_pos.y }
+	end
+	table.sort(ranked, function(a, b) return a.dist > b.dist end)
+	local first_active = 6 - num_active_objects + 1
+	for i = 1, #ranked do
+		sort_slots[first_active + i - 1].correct_index = ranked[i].index
+	end
+	go_selected_node = nil
+	drag_node = nil
+	drag_node_index = nil
+end

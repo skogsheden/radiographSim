@@ -1,0 +1,376 @@
+ddgui = require("dd-gui.ddgui")
+
+-- Input values
+local tube_angle = vmath.vector3()
+local sensor_angle = vmath.vector3()
+local tooth_angle = vmath.vector3()
+local tube_pos = vmath.vector3()
+local tooth_pos = vmath.vector3()
+local sensor_pos = vmath.vector3()
+local show_lines = true
+local show_rays = true
+
+-- Start positions
+local start_sensor_pos = vmath.vector3(0,0,0)
+local start_tube_pos = vmath.vector3(0,0,0)
+local start_tooth_pos = vmath.vector3(0,0,0)
+
+-- Nodes
+local go_tube = nil
+local go_tooth = nil
+local go_sensor = nil
+local go_apex = nil
+local go_top = nil
+local go_sensor_top = nil
+local go_sensor_bottom = nil
+local go_rays = {}
+
+-- Debug nodes
+local go_debug = nil
+local tooth_outside_top = nil
+local tooth_outside_bottom = nil
+local conecut_top = nil
+local conecut_bottom = nil
+local tooth_on_sensor = nil
+local apex_to_sensor = nil
+local top_to_sensor = nil
+
+-- Image nodes
+local go_cone_top = nil
+local go_cone_bottom = nil
+local go_image = nil
+
+-- Previous values (unused, kept for potential future use)
+local loaded = false
+
+-- Data
+local data = {}
+
+-- Collected debug nodes for visibility toggling
+local debug_nodes = {}
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+
+	--Set nodes
+	go_tube = gui.get_node("tube")
+	go_tooth = gui.get_node("tooth")
+	go_sensor = gui.get_node("sensor")
+	go_apex = gui.get_node("apex")
+	go_top = gui.get_node("top")
+	go_sensor_top = gui.get_node("top_sensor")
+	go_sensor_bottom = gui.get_node("bottom_sensor")
+	go_rays = {gui.get_node("ray1"),gui.get_node("ray2"),gui.get_node("ray3"),gui.get_node("ray4"),gui.get_node("ray5")}
+
+	-- Image nodes
+	go_cone_top = gui.get_node("cone_top")
+	go_cone_bottom = gui.get_node("cone_bottom")
+	go_image = gui.get_node("image")
+
+	-- Set debugnodes
+	go_debug = gui.get_node("debug_lines")
+	tooth_outside_top = gui.get_node("tooth_outside_top")
+	tooth_outside_bottom = gui.get_node("tooth_outside_bottom")
+	conecut_top = gui.get_node("conecut_top")
+	conecut_bottom = gui.get_node("conecut_bottom")
+	tooth_on_sensor = gui.get_node("tooth_on_sensor")
+	apex_to_sensor = gui.get_node("apex_to_sensor")
+	top_to_sensor = gui.get_node("top_to_sensor")
+
+	-- Collect debug nodes for clean visibility toggling
+	debug_nodes = {
+		go_debug, tooth_outside_top, tooth_outside_bottom,
+		conecut_top, conecut_bottom, tooth_on_sensor,
+		apex_to_sensor, top_to_sensor
+	}
+
+	-- Setup vectors
+	tube_angle = gui.get_euler(go_tube)
+	sensor_angle = gui.get_euler(go_sensor)
+	tooth_angle = gui.get_euler(go_tooth)
+
+	start_sensor_pos, sensor_pos = gui.get_position(go_sensor), gui.get_position(go_sensor)
+	start_tube_pos, tube_pos = gui.get_position(go_tube), gui.get_position(go_tube)
+	start_tooth_pos, tooth_pos = gui.get_position(go_tooth), gui.get_position(go_tooth)
+
+	-- Detect mobile device so dd-gui scales touch targets correctly
+	ddgui.check_device(self)
+
+	-- Setup debug positions and angles
+	gui.set_screen_position(apex_to_sensor, gui.get_screen_position(go_apex))
+	gui.set_screen_position(top_to_sensor, gui.get_screen_position(go_top))
+
+	-- Set start values for sliders
+	ddgui.setValueSlider(self, "tube_angle", 10, 0, 90)
+	ddgui.setValueSlider(self, "sensor_angle", 10, 0, 90)
+	ddgui.setValueSlider(self, "tooth_angle", 10, 0, 45)
+	ddgui.setValueSlider(self, "sensor_posy", -30, -60, 60)
+	ddgui.setValueSlider(self, "tube_posy", 0, -60, 120)
+
+	-- Initialize checkboxes with their default values so the visual state
+	-- is correct on the very first frame (before on_input runs).
+	ddgui.initializeCheckbox(self, "showlines", false, true)
+	ddgui.initializeCheckbox(self, "showrays",  true,  true)
+end
+
+function on_input(self, action_id, action)
+	-- Go back to mainmenu
+	if ddgui.button(self, action_id, action, "menu", true, false, "<") then
+		msg.post("gamemanager:/gamemanager", "load_menu")	
+	end
+	if ddgui.button(self, action_id, action, "reset", true, false) then
+		ddgui.setValueSlider(self, "tube_angle", 10, 0, 90)
+		ddgui.setValueSlider(self, "tube_posy", 0, -60, 120)
+		ddgui.setValueSlider(self, "sensor_angle", 10, 0, 90)
+		ddgui.setValueSlider(self, "tooth_angle", 10, 0, 45)
+		ddgui.setValueSlider(self, "sensor_posy", -30, -60, 60)
+		ddgui.resetSlider(self, "tube_posx")
+		ddgui.resetSlider(self, "sensor_posx")
+	end
+
+	-- Input
+	tube_angle.z = -ddgui.slider(self, action_id, action, "tube_angle", true, true, 0, 90)
+	tube_pos.y = start_tube_pos.y + ddgui.slider(self, action_id, action, "tube_posy", true, true, -60, 120)
+	tube_pos.x = start_tube_pos.x + ddgui.slider(self, action_id, action, "tube_posx", true, true, -30, 60)
+	sensor_angle.z = -ddgui.slider(self, action_id, action, "sensor_angle", true, true, 0, 90)
+	sensor_pos.y = start_sensor_pos.y + ddgui.slider(self, action_id, action, "sensor_posy", true, true, -60, 60)
+	sensor_pos.x = start_sensor_pos.x + ddgui.slider(self, action_id, action, "sensor_posx", true, true, -60, 80)
+	tooth_angle.z = -ddgui.slider(self, action_id, action, "tooth_angle", true, true, 0, 45)
+	tooth_pos.y = start_tooth_pos.y + ddgui.slider(self, action_id, action, "tooth_posy", true, true, -60, 60)
+	show_lines = ddgui.checkbox(self, action_id, action, "showlines", true, false, "Aktiver/inaktiver linjer")
+	show_rays = ddgui.checkbox(self, action_id, action, "showrays", true, true, "Aktiver/inaktiver röntgenstrålar")
+
+	-- Hide or show go_rays
+	for i = 1, #go_rays do
+		gui.set_visible(go_rays[i], show_rays)
+	end
+
+	-- Update positions and angles of main objects
+	gui.set_euler(go_sensor, sensor_angle)
+	gui.set_euler(go_tooth, tooth_angle)
+	gui.set_euler(go_tube, tube_angle)
+	gui.set_position(go_sensor, sensor_pos)
+	gui.set_position(go_tooth, tooth_pos)
+	gui.set_position(go_tube, tube_pos)
+
+	-- Update debug line origins to follow tooth landmarks
+	gui.set_screen_position(apex_to_sensor, gui.get_screen_position(go_apex))
+	gui.set_screen_position(top_to_sensor, gui.get_screen_position(go_top))
+
+	-- Lines between tooth and sensor
+	gui.set_euler(apex_to_sensor, vmath.vector3(0,0,tube_angle.z+90))
+	gui.set_euler(top_to_sensor, vmath.vector3(0,0,tube_angle.z-90))
+
+	-- Cache world positions once per frame (instead of recalculating per use)
+	local pos_top = get_world_pos(top_to_sensor)
+	local pos_apex = get_world_pos(apex_to_sensor)
+	local pos_sensor = get_world_pos(go_sensor)
+	local pos_sensor_top = get_world_pos(go_sensor_top)
+	local pos_sensor_bottom = get_world_pos(go_sensor_bottom)
+
+	-- Calculate length of tooth on sensor
+	local sensor_length = gui.get_size(go_sensor).y
+	local collision_bottom, position_bottom = vectors_intersect(pos_top, tube_angle.z, 1000, pos_sensor, sensor_angle.z+90, sensor_length)
+	local collision_top, position_top = vectors_intersect(pos_apex, tube_angle.z, 1000, pos_sensor, sensor_angle.z+90, sensor_length)	
+	local depict_pos = gui.get_position(tooth_on_sensor)
+
+	if collision_bottom then
+		local distance_bottom_collison = vmath.length(position_bottom - pos_sensor)
+		local distance_bottom_sensor = vmath.length(position_bottom - pos_top)
+		depict_pos.y = distance_bottom_collison
+		data.depict_pos = distance_bottom_collison
+		gui.set_position(tooth_on_sensor, depict_pos)
+		gui.set_size(top_to_sensor, vmath.vector3(2,distance_bottom_sensor,0))
+		if collision_top then
+			local distance_top_sensor = vmath.length(position_top - pos_apex)
+			local distance_top_bottom = vmath.length(position_top - position_bottom)
+			gui.set_size(tooth_on_sensor, vmath.vector3(3,distance_top_bottom,0))
+			gui.set_size(apex_to_sensor, vmath.vector3(2,distance_top_sensor,0))
+		else
+			gui.set_size(tooth_on_sensor, vmath.vector3(3,sensor_length-distance_bottom_collison,0))
+		end
+	elseif collision_top then
+		depict_pos.y = 0
+		gui.set_position(tooth_on_sensor, depict_pos)
+		local distance_top_collison = vmath.length(position_top - pos_sensor)
+		local distance_top_sensor = vmath.length(position_top - pos_apex)
+		gui.set_size(apex_to_sensor, vmath.vector3(2,distance_top_sensor,0))
+		gui.set_size(tooth_on_sensor, vmath.vector3(3,distance_top_collison,0))
+	else
+		gui.set_size(tooth_on_sensor, vmath.vector3(3,sensor_length,0))
+	end
+	data.size_sensor = gui.get_size(tooth_on_sensor).y
+	data.depict_pos = depict_pos
+
+	-- Loop through go_rays
+	for i = 1, #go_rays do
+		local ray_world_pos = get_world_pos(go_rays[i])
+		local collsion_ray, position_ray = vectors_intersect(ray_world_pos, tube_angle.z, 1000, pos_sensor, sensor_angle.z+90, sensor_length)
+
+		if collsion_ray then
+			local distance_ray_sensor = vmath.length(position_ray - ray_world_pos)
+			local parent_scale = get_parent_world_scale(go_rays[i])
+			local ray_size = gui.get_size(go_rays[i])
+			ray_size.x = distance_ray_sensor / parent_scale.x
+			gui.set_size(go_rays[i], ray_size)
+		else
+			local ray_size = gui.get_size(go_rays[i])
+			ray_size.x = 10000
+			gui.set_size(go_rays[i], ray_size)
+		end
+
+		-- Draw conecut (only first and last ray)
+		if i == 1 or i == #go_rays then
+			if i == #go_rays then
+				local cut_size = gui.get_size(conecut_bottom)
+				cut_size.y = collsion_ray and vmath.length(position_ray - pos_sensor) or 0
+				gui.set_size(conecut_bottom, cut_size)
+			else
+				local cut_size = gui.get_size(conecut_top)
+				cut_size.y = collsion_ray and (200 - vmath.length(position_ray - pos_sensor)) or 0
+				gui.set_size(conecut_top, cut_size)
+			end
+		end	
+	end
+
+	-- How much of tooth outside at crown
+	local coll_tooth_outside_top, position_tooth_outside_top = vectors_intersect(pos_top, tube_angle.z, 10000, pos_sensor_bottom, sensor_angle.z+90, -10000)
+	local coll_tooth_outside_apex, position_tooth_outside_apex = vectors_intersect(pos_apex, tube_angle.z, 10000, pos_sensor_top, sensor_angle.z+90, 10000)
+
+	if coll_tooth_outside_top then
+		local distance_outside_top = vmath.length(pos_sensor_bottom - position_tooth_outside_top)
+		local distance_top = vmath.length(pos_top - position_tooth_outside_top)
+		gui.set_size(top_to_sensor, vmath.vector3(2,distance_top,0))
+		gui.set_size(tooth_outside_bottom, vmath.vector3(gui.get_size(tooth_outside_bottom).x, distance_outside_top, 0))
+	else
+		gui.set_size(tooth_outside_bottom, vmath.vector3(gui.get_size(tooth_outside_bottom).x, 0, 0))
+	end
+
+	-- How much of tooth outside at apex
+	if coll_tooth_outside_apex then
+		local distance_outside_apex = vmath.length(pos_sensor_top - position_tooth_outside_apex)
+		local distance_apex = vmath.length(pos_apex - position_tooth_outside_apex)
+		gui.set_size(apex_to_sensor, vmath.vector3(2,distance_apex,0))
+		gui.set_size(tooth_outside_top, vmath.vector3(gui.get_size(tooth_outside_top).x, distance_outside_apex, 0))
+	else
+		gui.set_size(tooth_outside_top, vmath.vector3(gui.get_size(tooth_outside_top).x, 0, 0))
+	end
+
+	data.conecut_top = gui.get_size(conecut_top).y
+	data.conecut_bottom = gui.get_size(conecut_bottom).y
+	data.size_outside_apex = gui.get_size(tooth_outside_top).y
+	data.size_outside_top = gui.get_size(tooth_outside_bottom).y
+	local total_length = data.size_sensor + data.size_outside_top + data.size_outside_apex
+	gui.set_size(go_cone_bottom, vmath.vector3(175, data.conecut_bottom,0))
+	gui.set_size(go_cone_top, vmath.vector3(175, data.conecut_top,0))
+	gui.set_size(go_image, vmath.vector3(175, total_length,0))
+	gui.set_position(go_image, vmath.vector3(0,-100-data.size_outside_top + data.depict_pos.y,0))
+
+	-- Toggle debug node visibility in one call
+	set_nodes_visible(debug_nodes, show_lines)
+end
+
+
+---------------------------------------------------------------------------
+-- UTILITY FUNCTIONS (from block – handles parent scale & rotation correctly)
+---------------------------------------------------------------------------
+
+--- Walks the parent chain and returns the node position in root GUI space,
+--- correctly accounting for each parent's position, scale and rotation.
+function get_world_pos(node)
+	local pos = gui.get_position(node)
+	local parent = gui.get_parent(node)
+	while parent ~= nil do
+		local ps = gui.get_scale(parent)
+		local pp = gui.get_position(parent)
+		local pr = math.rad(gui.get_euler(parent).z)
+		local rx = pos.x * ps.x
+		local ry = pos.y * ps.y
+		pos = vmath.vector3(
+		pp.x + rx * math.cos(pr) - ry * math.sin(pr),
+		pp.y + rx * math.sin(pr) + ry * math.cos(pr),
+		0
+		)
+		parent = gui.get_parent(parent)
+	end
+	return pos
+end
+
+--- Returns the cumulative scale of all parents above the given node.
+function get_parent_world_scale(node)
+	local scale = vmath.vector3(1, 1, 1)
+	local parent = gui.get_parent(node)
+	while parent ~= nil do
+		local ps = gui.get_scale(parent)
+		scale.x = scale.x * ps.x
+		scale.y = scale.y * ps.y
+		parent = gui.get_parent(parent)
+	end
+	return scale
+end
+
+--- Shorthand: world-space distance between two GUI nodes.
+function world_dist(node_a, node_b)
+	return vmath.length(get_world_pos(node_a) - get_world_pos(node_b))
+end
+
+--- Converts window pixel coords to GUI design-space coords. (Currently unused.)
+function screen_to_gui(action_x, action_y)
+	local base_w = sys.get_config_int("display.width")
+	local base_h = sys.get_config_int("display.height")
+	local win_w, win_h = window.get_size()
+
+	local scale = math.min(win_w / base_w, win_h / base_h)
+	local offset_x = (win_w - base_w * scale) * 0.5
+	local offset_y = (win_h - base_h * scale) * 0.5
+
+	local gui_x = (action_x * win_w / base_w) / scale
+	local gui_y = (action_y * win_h / base_h - offset_y) / scale
+
+	return gui_x, gui_y
+end
+
+--- Set visibility for a list of nodes in one call.
+function set_nodes_visible(nodes, visible)
+	for _, node in ipairs(nodes) do
+		gui.set_visible(node, visible)
+	end
+end
+
+
+---------------------------------------------------------------------------
+-- GEOMETRY HELPERS
+---------------------------------------------------------------------------
+
+function angle_to_unit_vector(angle)
+	local rad = math.rad(angle)
+	return vmath.vector3(math.cos(rad), math.sin(rad), 0)
+end
+
+function vectors_intersect(start1, angle1, length1, start2, angle2, length2)
+	local direction1 = angle_to_unit_vector(angle1)
+	local direction2 = angle_to_unit_vector(angle2)
+
+	local end1 = start1 + direction1 * length1
+	local end2 = start2 + direction2 * length2
+
+	local r = end1 - start1
+	local s = end2 - start2
+
+	local cross_r_s = r.x * s.y - r.y * s.x
+
+	local epsilon = 1e-6
+	if math.abs(cross_r_s) < epsilon then
+		return false, nil
+	end
+
+	local t = ((start2.x - start1.x) * s.y - (start2.y - start1.y) * s.x) / cross_r_s
+	local u = ((start2.x - start1.x) * r.y - (start2.y - start1.y) * r.x) / cross_r_s
+
+	if t >= 0 and t <= 1 and u >= 0 and u <= 1 then
+		local intersection = start1 + r * t
+		return true, intersection
+	else
+		return false, nil
+	end
+end
